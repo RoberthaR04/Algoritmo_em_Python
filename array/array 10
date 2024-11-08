@@ -1,0 +1,13 @@
+import numpy as np
+notas = np.zeros(15, dtype=float) #específica o tipo 
+
+
+for i in range(15): #contador
+   
+    notas[i] = float(input(f"Digite a nota do aluno {i+1}: ")) #pede para informar cada nota
+
+
+media_geral = np.mean(notas) #calcula a média
+
+
+print(f"A média geral das notas é: {media_geral:.2f}")

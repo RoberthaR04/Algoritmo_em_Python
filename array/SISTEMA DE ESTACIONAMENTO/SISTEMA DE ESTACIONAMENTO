@@ -1,0 +1,101 @@
+import numpy as np
+import random
+
+# Os três setores de vagas
+A = np.array(["DNDJN", "JDJDH", ''])
+B = np.array(["JBDJE", '', "IEIEN"])
+C = np.array(["EYGYG", '', "EBJEE"])
+
+# Para verificar se o carro já está estacionado
+def estacionado(placa): #recebe a placa como parâmetro
+    for setor in [A, B, C]:
+        if placa in setor: #caso a placa seja encontrada
+            print(f"Carro com placa {placa} já está estacionado.")
+            return True
+    return False #caso a placa não seja encontrada
+
+# Para ocupar uma vaga
+def ocupar_vaga(placa): 
+    if estacionado(placa): #verifica se o carro está estacionado
+        return
+    
+    # Primeiro sorteio: escolher o setor aleatoriamente
+    setor_index = random.choice([0, 1, 2])  #posição de cada setor
+    seleciona_vaga = [A, B, C][setor_index] 
+    nome_setor = ['A', 'B', 'C'][setor_index]
+    
+    # Segundo sorteio: escolher uma vaga no setor sorteado
+    vagas_disponiveis = [i for i in range(len(seleciona_vaga)) if seleciona_vaga[i] == '']
+    
+    if not vagas_disponiveis:  # Se não houver vagas disponíveis
+        print('Sem vagas disponíveis neste setor. Tente outra vez.')
+        return
+
+    # Terceiro sorteio: escolher uma vaga vazia no setor sorteado
+    vaga_index = random.choice(vagas_disponiveis)
+    seleciona_vaga[vaga_index] = placa  # Ocupar a vaga
+    
+    print(f'O carro com a placa {placa} está estacionado no setor {nome_setor}, vaga {vaga_index + 1}.')
+
+# Para liberar uma vaga que está ocupada
+def liberar_vaga(placa):
+    for setor in [A, B, C]:
+        for i in range(len(setor)):
+            if setor[i] == placa:
+                setor[i] = '' 
+                print(f'Vaga liberada para o carro com a placa {placa}.') #após identificar a placa e liberar do estacionamento
+                return
+    print(f'Carro com placa {placa} não encontrado.') #caso náo tenha esse carro não esteja estacioando
+
+# Para verificar vagas disponíveis
+def vagas_disponiveis():
+    vagas = sum(list(setor).count('') for setor in [A, B, C])
+    print(f'Total de vagas disponíveis: {vagas}')
+    return vagas
+
+# Para listar todas as vagas e classificar
+def classificar_vagas():
+    nome_setores = ['A', 'B', 'C']
+    setores = [A, B, C]
+    for i in range(len(setores)):
+        print(f"Setor {nome_setores[i]}: {setores[i]}")
+
+# Consultar a placa do veículo estacionado
+def consultar_placa(placa):
+    for idx, setor in enumerate([A, B, C]): #enumerate para obter o indice e o setor
+        if placa in setor:
+            vaga = np.nonzero(setor == placa)[0][0] + 1  #índice ajustado para 1-indexed
+            nome_setor = ['A', 'B', 'C'][idx]
+            print(f'O carro com a placa {placa} está no setor {nome_setor}, vaga {vaga}.')
+            return
+    print(f"Carro com placa {placa} não foi encontrado.")
+
+# Exemplo de interação com o sistema
+while True:
+    print('\n1. Ocupar vaga (1)')
+    print('2. Liberar vaga (2)')
+    print('3. Verificar vagas disponíveis (3)')
+    print('4. Listar vagas (4)')
+    print('5. Consultar placa (5)')
+    print('6. Sair (6)')
+    
+    escolha = int(input("Escolha uma opção para iniciar: "))
+    
+    if escolha == 1:
+        placa = input('Informe a placa do veículo em caixa alta: ').upper()
+        ocupar_vaga(placa)
+    elif escolha == 2:
+        placa = input('Informe a placa do veículo em caixa alta a ser removido: ').upper()
+        liberar_vaga(placa)
+    elif escolha == 3:
+        vagas_disponiveis()
+    elif escolha == 4:
+        classificar_vagas()
+    elif escolha == 5:
+        placa = input('Informe a placa do veículo em caixa alta: ').upper()
+        consultar_placa(placa)
+    elif escolha == 6:
+        print("Obrigado por acessar nosso sistema!")
+        break
+    else:
+        print("Opção inválida. Tente novamente.")

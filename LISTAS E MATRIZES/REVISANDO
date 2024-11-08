@@ -1,0 +1,32 @@
+# A=[[1,2,3],[4,5,6]]
+# print(A)
+
+# matriz=[[1, 2,	3, 4],
+#         [5, 6,	7, 8],
+#         [9, 10,	11, 12],
+#         [13, 14, 15, 16]
+#         ]
+# col=0
+# soma=0
+# for linha in matriz:
+#     soma += linha[col]
+# print(soma)
+
+# soma=0
+# for i in matriz:
+#     for j in i:
+#         soma += j
+# print(soma)
+
+# list=[]
+# n=int(input('Informe n:'))
+# m=int(input('Informe n:'))
+# for n in range(n):
+#     aux=[]
+#     for m in range(m):
+#         x=int(input('diga'))
+#         list.append(x)
+# print(list)
+
+def limite(2,5):
+    
